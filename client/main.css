@@ -1,0 +1,87 @@
+.mainLoginManagement {
+  width: 600px;
+  margin-top: 20vh;
+  margin-left:35vw;
+  padding-bottom: 5vh;
+  padding-left: 15vh;
+  padding-top: 5vh; 
+  border-radius: 25px;
+
+
+
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+
+ 
+}
+
+.mainLoginManagement:hover{  
+  background-color: rgba(0,0,0,0.7); /*dim the background*/
+
+
+} 
+.loginContainer{
+  background-image: url('https://wallpaperplay.com/walls/full/2/e/d/182524.jpg');
+    background-size: 100%;
+    padding: 1px 0;
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    color: #fff;
+    font-family: "Comfortaa", "Helvetica", sans-serif;
+}
+.logo{
+  width :100px;
+  margin : 0 auto;
+}
+.header-section {
+  z-index: 200;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.6);
+}
+@media screen and (min-width: 768px){
+.header-section {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.header-section {
+  padding: 30px 10px;
+}
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+div {
+  display: block;
+}
+.sidebar-user {
+  padding-left: 88px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.sidebar-section {
+  padding: 20px;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+div {
+  display: block;
+}
+.sidebar-content {
+  width: 200px;
+  color: #ffffff;
+}
+strong {
+  color : #ffff00 ;
+  font-weight: bolder;
+}
+.react-calendar__tile.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend.colorful{
+  background: #ffff00;
+}
