@@ -31,16 +31,17 @@ class StudentClass extends Component {
                 console.log(err)
             }
             else { 
+            
                 this.setState({attendance : res});
             }
         })
     }
     getStatus = (status) => {
         if(status == 'Present'){
-            return <Tag color="success"> Present </Tag>
+            return <Tag color="green"> Present </Tag>
         }
         else {
-            return <Tag color="danger"> Absent </Tag>
+            return <Tag color="red"> Absent </Tag>
 
         }
     }
@@ -101,7 +102,7 @@ class StudentClass extends Component {
    </Select>
    <List>
    {this.state.attendance ? this.state.attendance.map(a => 
-   <List.Item>{this.props.data ? this.props.data.username : "Student"} was {this.getStatus(a.status)} on {moment(a.date).toDate("DD/MM/YYYY")}</List.Item>) : null}
+   <List.Item>{this.props.data ? this.props.data.username : "Student"} was {this.getStatus(a.status)} on {moment(a.date).toDate("DD/MM/YYYY").toDateString()}</List.Item>) : null}
    </List>
               </MDBCardText>
 </MDBCardBody>

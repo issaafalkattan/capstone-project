@@ -12,11 +12,10 @@ class Attendance extends Component {
    console.log("FREAKING HERE")
   
  }
- validator = () => {
-   if(this.state.valid == 'idk' && this.props.valid != 'idk'){
-  if(this.props.valid == true){
-    console.log("vaid is true")
-  Meteor.call("mark.attendance", { classId : this.props.class, studentId : this.props.id, counter : this.props.counter}, (err, res) => {
+
+componentDidMount(){
+  console.log("mounted")
+  Meteor.call("mark.attendance", { classId : this.props.class, studentId : this.props.id, counter : this.props.counter, day : this.props.day}, (err, res) => {
     if(err){
       this.setState({valid : false})
 
@@ -33,15 +32,9 @@ class Attendance extends Component {
     }
   });
 }
-else if(this.props.valid == false){
-  console.log("Valid is false")
-  this.setState({valid : false})
 
-}
-   }
- }
+ 
   render() {
-    this.validator();
     return (
       <div style={{background : 'black', color : '#00F1C5', textAlign : 'center', minHeight : '100vh', width : '100%'}}>
     
@@ -72,31 +65,11 @@ const ViewArticlesWrapper = withTracker(props => {
   const counter = props.counter;
   console.log(id);
  const student = Student.findOne({accountId : id});
- console.log(student)
  const data = Classe.findOne({_id : classId})
 const ready = status.ready() && status2.ready();
-let valid = "idk";
-if(ready && student && data){
- console.log(data, counter, data.classCounter);
-  if(counter == data.classCounter){
-    console.log("Counters are equal");
-    let today = new Date().getDay()
-    console.log(today, day)
-    if(today == day){
-      console.log("days are equal")
-      valid = true;
-    }
-    else { 
-      valid = false;
-    }
-  }
-  else {
-    valid = false;
-  }
 
-}
+
   return {
-    valid,
     data,
     ready,
     student,

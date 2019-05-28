@@ -1,7 +1,7 @@
 import { Classe } from "./classes";
 import { Student } from "./student";
 import { Attendance } from "./attendance";
-
+import moment from 'moment'
 Meteor.methods({
   "create.class"(data) {
     let course = new Classe(data);
@@ -70,13 +70,34 @@ Meteor.methods({
       console.log(" one exists", a);
       return false;
     } else if (a == undefined) {
-      let atten = new Attendance();
-      atten.classId = data.classId;
-      atten.studentId = data.studentId;
-      atten.counter = parseInt(data.counter);
-      atten.date = new Date();
-      atten.save();
-      return true;
+      //check if valid 
+      let clas = Classe.findOne({_id : data.classId});
+      let today = new Date().getDay();
+      console.log(data.studentId)
+      let st = Student.findOne({accountId : data.studentId});
+      console.log(st);
+      if(st){
+        console.log("found student")
+      if(clas.classCounter == parseInt(data.counter) && today ==  parseInt(data.day)){
+        console.log("Values are true");
+        let atten = new Attendance();
+        atten.classId = data.classId;
+        atten.studentId = data.studentId;
+        atten.counter = parseInt(data.counter);
+        atten.date = new Date();
+        atten.save();
+        return true;
+      }
+      else { 
+        console.log("NOT EQUAL")
+      return false;
+      }
+    }
+    else {
+      console.log("NO ST FOUND")
+      return false;
+    }
+      
     }
   },
   "remove.from.class"(list, id) {
@@ -119,7 +140,7 @@ Meteor.methods({
           }
         });
         const studentAttend = Attendance.find({
-          studentId: a._id,
+          studentId: a.accountId,
           classId: cl._id
         }).count();
         if (studentAttend < counters.length / 2) {
@@ -156,9 +177,10 @@ Meteor.methods({
       });
     });
     return data;
-  },
+  }, 
   "get.attendance.class"(id, classId) {
-    const atten = Attendance.find({ classId: id }).fetch();
+    console.log(id, classId);
+    const atten = Attendance.find({ classId: classId }).fetch();
     let counters = [];
     atten.map(a => {
       if (!counters.includes(a.counter)) {
@@ -166,17 +188,22 @@ Meteor.methods({
       }
     });
     let data = [];
+    const stu = Student.findOne({_id : id});
+    
+    console.log("Counters are", counters)
     counters.map(count => {
-      const stAtt = Attendance.findOne({classId  : classId, studentId : studentId, counter : count});
+      const stAtt = Attendance.findOne({classId  : classId, studentId : stu.accountId, counter : count});
+      console.log("the stats", stAtt)
        if(stAtt){
-         data.push({status : "Present", date : stAtt.date})
+         data.push({status : "Present", date : moment(stAtt.date).toDate("DD/MM/YYYY")})
        }
        else {
          let notAtt = Attendance.findOne({classId  : classId, counter : count});
-        data.push({status : "Absent", date : notAtt.date})
+        data.push({status : "Absent", date :  moment(notAtt.date).toDate("DD/MM/YYYY")})
 
        }
     })
+    console.log('daTAAA', data)
     return data;
   },
   "delete.student"(id) {
