@@ -18,7 +18,7 @@ class QrCode extends Component {
         bounds="window"
       >
       {this.props.data ? 
-          <QRCode value={`http://192.168.1.101:3000/attendance/${this.props.id}/d/${this.props.today}/c/${this.props.data.classCounter}`} style={{ width : '100%', height : 'auto'}}/>
+          <QRCode value={`https://capstone-classify.herokuapp.com/attendance/${this.props.id}/d/${this.props.today}/c/${this.props.data.classCounter}`} style={{ width : '100%', height : 'auto'}}/>
           : <Spin />}
           </Rnd>
           </Card>
