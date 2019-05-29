@@ -225,6 +225,24 @@ Meteor.methods({
       cla.studentList = temp;
       cla.save();
      })
+    },
+     "mark.attendance.many" (data, id){
+       let cl = Classe.findOne({_id : id});
+       data.map(a => {
+         let exists = Attendance.findOne({studentId : a, classId : id, counter : cl.classCounter});
+         if(exists){
+           console.log("exists");
+         }
+         else {
+         let atten = new Attendance();
+         atten.classId = id;
+         atten.studentId =a;
+         atten.counter = parseInt(cl.classCounter);
+         atten.date = new Date();
+         atten.save();
+         }
+       })
+     }
      
-  }
+  
 });

@@ -10,9 +10,9 @@ class QrCode extends Component {
       <Card style={{backgroundColor : 'white'}} loading={!this.props.ready}>       <Rnd
         default={{
           x: 300,
-          y: 0,
-          width: 200,
-          height: 150,
+          y: 100,
+          width: 300,
+          height: 300,
         }}
 
         bounds="window"

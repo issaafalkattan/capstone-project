@@ -19,7 +19,7 @@ import {
   MDBModalHeader,
   MDBModalFooter
 } from "mdbreact";
-
+import ManualAtten from './manualAttendance';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -100,7 +100,7 @@ class Class extends Component {
         <MDBCol sm="6">
             <MDBCard >
             <MDBCardBody>
-                <MDBCardTitle>Attendance <MDBBtn onClick={() => 
+                <MDBCardTitle> <MDBBtn size="sm" color="primary" onClick={() => 
 
                 Meteor.call('increment.counter', this.props.data._id, (err,res) => {
                      if(err){
@@ -110,7 +110,9 @@ class Class extends Component {
                       navigate(`/qr/${this.props.data._id}`);
                      }
                 })
-               }><i class="fas fa-qrcode"></i> QRCode Attendance</MDBBtn></MDBCardTitle>
+               }><i class="fas fa-qrcode"></i> New QRCode Attendance</MDBBtn>
+               <MDBBtn color="secondary" size="sm" onClick={() => navigate(`/qr/${this.props.data._id}`)}><i class="fas fa-qrcode"></i> Continue QRCode Attendance</MDBBtn>
+               </MDBCardTitle>
                 <MDBCardText>
                 <Table columns={columns} dataSource={this.props.parsedD} rowKey={record => record._id}/>
                 <Bar height={200} title="Attendance Ratios" data={this.props.graphData}  />
@@ -122,11 +124,26 @@ class Class extends Component {
 </MDBCardBody>
             </MDBCard>
             </MDBCol>
+            
           <MDBCol sm="6">
             <MDBCard>
+            <MDBCardBody>
+            <MDBCardTitle>Manual Attendance</MDBCardTitle>
+                <MDBCardText>
+<ManualAtten id={this.props.id} />
+
+
+                </MDBCardText>
+
+
+</MDBCardBody>
+            </MDBCard>
+            </MDBCol>
+          <MDBCol sm="6">
+            <MDBCard style={{marginTop : '5%'}}>
               <MDBCardBody>
                 <MDBCardTitle>
-                Students   
+                Manage Students   
               
         <MDBBtn className="mr-1" color="white" size="sm" onClick={() => this.setState({modal : true})}><i  className="fas fa-list" /> List</MDBBtn>
         <MDBBtn className="mr-1" color="green" size="sm" onClick={() => navigate("/view-students")}> <i  className="fas fa-plus" />Add</MDBBtn>
@@ -163,8 +180,8 @@ class Class extends Component {
             </MDBCard>
           </MDBCol>
           
-          <MDBCol sm="6" style={{marginTop : '5%'}} >
-            <MDBCard>
+          <MDBCol sm="6" >
+            <MDBCard style={{marginTop : '5%'}}>
               <MDBCardBody>
                 <MDBCardTitle>Class Description</MDBCardTitle>
                 <MDBCardText>
@@ -200,20 +217,6 @@ class Class extends Component {
             </MDBCard>
           </MDBCol>
           
-          <MDBCol sm="6">
-            <MDBCard style={{marginTop : '-30%'}}>
-            <MDBCardBody>
-            <MDBCardTitle>Manual Attendance</MDBCardTitle>
-                <MDBCardText>
-Manually search for student & add attendance
-
-
-                </MDBCardText>
-
-
-</MDBCardBody>
-            </MDBCard>
-            </MDBCol>
         </MDBRow>
       </MDBContainer>
     );

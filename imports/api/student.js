@@ -28,7 +28,6 @@ export const Student = Class.create({
    }
   
 
-  // will add teacher id in a later phase
   },
 });
 
