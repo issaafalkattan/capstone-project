@@ -160,11 +160,11 @@ export class listPatients extends Component {
           selectedRows
         );
         let arr = [];
-        selectedRows.map(a => arr.push(a._id));
+        selectedRows.map(a => arr.push(a.accountId));
         this.setState({ selected: arr });
       },
       getCheckboxProps: record => ({
-        id: record._id
+        id: record.accountId
       })
     };
     return (
