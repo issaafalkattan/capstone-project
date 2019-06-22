@@ -15,3 +15,10 @@ Meteor.publish('get.students', () => {
 Meteor.publish('get.attendance', (id) => {
   return Attendance.find({classId : id})
 })
+Meteor.publish("my.classes", id => {
+  if(id){
+    const stId = Student.findOne({accountId : id})._id;
+   return Classe.find({studentList : stId})
+
+  }
+})
