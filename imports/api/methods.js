@@ -154,6 +154,39 @@ Meteor.methods({
     });
     return dangerZone;
   },
+  "mobile.redZone" (id){
+    
+    const dangerZone = [];
+
+    const students = Student.find({ createdBy: id }).fetch();
+    students.map(a => {
+      const allClasses = Classe.find({
+        teacherId: id,
+        studentList: a._id
+      });
+      allClasses.map(cl => {
+        const totalAttend = Attendance.find({ classId: cl._id }).fetch();
+        let counters = [];
+        totalAttend.map(at => {
+          if (!counters.includes(at.counter)) {
+            counters.push(at.counter);
+          }
+        });
+        const studentAttend = Attendance.find({
+          studentId: a.accountId,
+          classId: cl._id
+        }).count();
+        if (studentAttend < counters.length / 2) {
+          dangerZone.push({
+            student: `${a.fname} ${a.lname}`,
+            class: cl.name,
+            absent: counters.length - studentAttend
+          });
+        }
+      });
+    });
+    return dangerZone;
+  },
 
   "get.attedance.dates"(id) {
     console.log(id);
@@ -286,5 +319,15 @@ let absTotal = 0;
     });
     console.log({absent : absTotal, attend : attendTotal});
     return {absent : absTotal, attend : attendTotal};
+  },
+
+  'mobile.qr'(id){
+
+
+    const data = Classe.findOne({_id : id})
+
+    let today = new Date().getDay();
+
+    return `https://capstone-classify.herokuapp.com/attendance/${id}/d/${today}/c/${data.classCounter}`;
   }
 });
